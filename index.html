@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-image: url('https://c8.alamy.com/comp/2T35EKP/loan-approval-credit-agent-holds-loan-approval-application-document-with-approved-stamp-in-hand-flat-vector-modern-illustration-2T35EKP.jpg'); /* Add your background image URL here */
+            background-size: cover;
+            background-position: right; /* Adjust this value to shift the image */
+          background-repeat: repeat; */
+        }.top-center {
+            position: absolute;
+            top: 20px; /* Adjust this value to position the element further from the top */
+            text-align: center;
+            width: 100%;
+        }
+        }
+        h1 {
+            text-align: center;
+            font-weight: bold;
+        }
+        #prediction-form {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 5px;
+            border: 2px solid #ccc;
+            padding: 20px;
+            border-radius: 10px;
+            background-color: #f9f9f9;
+            background-color: rgba(255, 255, 255, 0.85);
+            margin-top: 0px; /* Adjust this value to move the form down if needed */
+/*             background-image: url('https://tse3.mm.bing.net/th?id=OIP.iC1VlROk8Zx5O5_d_p7TTQAAAA&pid=Api&P=0&h=180'); /* Add your background image URL here */
+            background-size: cover;
+            background-position: center; */
+        }
+        label, input {
+            display: block;
+            width: 100%;
+            font-weight: bold;
+        }
+        button {
+            grid-column: span 2;
+            padding: 7px 5px;
+            background-color: #007bff;
+            color: white;
+            border: None;
+            border-radius: 15px;
+            cursor: pointer;
+            text-align: center;
+            font-weight: bold;
+        }
+        button:hover {
+            background-color: #0056b3;
+            font-weight: bold;
+        }
+    </style>
+    <title>ML Model Prediction</title>
+</head>
+<body>
+    <h1>Check Your Loan Eligibility<br></h1>
+    <form id="prediction-form">
+        <label for="features"><br>Cibil Score:</label>
+        <input type="text" id="features" name="features">
+        <label for="features"><br>Loan Term:</label>
+        <input type="text" id="features" name="features">
+        <label for="features"><br>Loan Amount:</label>
+        <input type="text" id="features" name="features">
+        <label for="features"><br>Income(PA):</label>
+        <input type="text" id="features" name="features">
+        <label for="features"><br>Residential Assets Value:</label>
+        <input type="text" id="features" name="features">
+        <label for="features"><br>Luxury Assets Value:</label>
+        <input type="text" id="features" name="features">
+        <label for="features"><br>Commercial Assets Value:</label>
+        <input type="text" id="features" name="features">
+        <label for="features"><br>Bank Assets Value:</label>
+        <input type="text" id="features" name="features">
+        <button type="submit"><br>SUBMIT</button>
+    </form>
+    <div id="result"></div>
+
+    <script>
+        document.getElementById('prediction-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const features = document.getElementById('features').value.split(',').map(Number);
+            fetch('/predict', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ features: features }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('result').innerText = 'Prediction: ' + data.prediction;
+            });
+        });
+    </script>
+</body>
+</html>
